@@ -92,3 +92,16 @@ cloud-provider-name: "{{ rke2_cloud_provider_name }}"
 {% endif %}
 cluster-cidr: "{% for network in rke2_cluster_cidr %}{{ network }}{% if not loop['last'] %},{% endif %}{% endfor %}"
 service-cidr: "{% for network in rke2_service_cidr %}{{ network }}{% if not loop['last'] %},{% endif %}{% endfor %}"
+
+{% if (rke2_etcd_snapshot_s3_cron) and (rke2_etcd_snapshot_s3_options.snapshot_name == "") %}
+etcd-snapshot-schedule-cron: "{{ rke2_etcd_snapshot_s3_cron }}"
+etcd-snapshot-retention: "{{ rke2_etcd_snapshot_s3_options.retention | default('25') }}"
+etcd-s3: true
+etcd-s3-endpoint: "{{ rke2_etcd_snapshot_s3_options.s3_endpoint }}"
+etcd-s3-skip-ssl-verify: "{{ rke2_etcd_snapshot_s3_options.skip_ssl_verify | default('false')}}"
+etcd-s3-access-key: "{{ rke2_etcd_snapshot_s3_options.access_key }}"
+etcd-s3-secret-key: "{{ rke2_etcd_snapshot_s3_options.secret_key }}"
+etcd-s3-bucket: "{{ rke2_etcd_snapshot_s3_options.bucket }}"
+etcd-s3-folder: "{{ rke2_etcd_snapshot_s3_options.folder | default('') }}"
+etcd-s3-region: "{{ rke2_etcd_snapshot_s3_options.region | default('us-east-1') }}"
+{% endif %}

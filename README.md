@@ -233,16 +233,23 @@ rke2_etcd_snapshot_destination_dir: "{{ rke2_data_path }}/server/db/snapshots"
 # Etcd snapshot s3 options
 # Set either all these values or `rke2_etcd_snapshot_file` and `rke2_etcd_snapshot_source_dir`
 
+# Enable automated s3 backups for etcd
+# When enabled, needs `rke2_etcd_snapshot_s3_options`
+rke2_etcd_snapshot_s3_cron: ""
+# Example: rke2_etcd_snapshot_s3_cron: "*/15 * * * *"
+
 # rke2_etcd_snapshot_s3_options:
   # s3_endpoint: "" # required
   # access_key: "" # required
   # secret_key: "" # required
   # bucket: "" # required
-  # snapshot_name: "" # required.
+  # snapshot_name: "" # required when restore backup
   # skip_ssl_verify: false # optional
   # endpoint_ca: "" # optional. Can skip if using defaults
   # region: "" # optional - defaults to us-east-1
   # folder: "" # optional - defaults to top level of bucket
+  # retention: 25 # required when cron backup
+
 # Override default containerd snapshotter
 rke2_snapshooter: overlayfs
 
